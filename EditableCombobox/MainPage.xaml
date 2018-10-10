@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EditableCombobox"
+             xmlns:controls="clr-namespace:EditableCombobox.Controls;assembly=EditableCombobox"
+             x:Class="EditableCombobox.MainPage">
+    <StackLayout  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <controls:EditableCombobox x:Name="EditCB"
+                                   ImageName="{Binding ImageName}"
+                                   Caption="Select an organization"
+                                   Margin="20,0,20,0" />
+        
+        <Button Clicked="Handle_Clicked" />
+    </StackLayout>
+</ContentPage>
