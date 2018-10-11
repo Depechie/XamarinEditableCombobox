@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Xamarin.Forms;
 
 namespace EditableCombobox.Controls
@@ -10,6 +11,7 @@ namespace EditableCombobox.Controls
         #region Bindable properties
         public static readonly BindableProperty ImageNameProperty = BindableProperty.Create(nameof(ImageName), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnImageNamePropertyChanged);
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(nameof(Caption), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnCaptionPropertyChanged);
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
 
         public string ImageName
         {
@@ -23,6 +25,12 @@ namespace EditableCombobox.Controls
             set => SetValue(CaptionProperty, value);
         }
 
+        public IEnumerable ItemsSource
+        {
+            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
+        }
+
         private static void OnImageNamePropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             ((EditableCombobox)bindable).InitIcon();
@@ -31,6 +39,11 @@ namespace EditableCombobox.Controls
         private static void OnCaptionPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             ((EditableCombobox)bindable).InitCaption();
+        }
+
+        private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((EditableCombobox)bindable).InitItemsSource();
         }
         #endregion
 
@@ -44,6 +57,7 @@ namespace EditableCombobox.Controls
         {
             InitIcon();
             InitCaption();
+            InitItemsSource();
         }
 
         private void InitIcon()
@@ -55,6 +69,9 @@ namespace EditableCombobox.Controls
         {
             Content.Text = Caption;
         }
+
+        private void InitItemsSource()
+        {}
 
         private async void OnTapped(object sender, System.EventArgs e)
         {

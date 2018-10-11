@@ -11,7 +11,7 @@ namespace EditableCombobox.Controls
 
         public void Appearing()
         {
-            SelectionEntry.Focus();
+            SelectionFilter.Focus();
         }
     }
 }

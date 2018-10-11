@@ -10,8 +10,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
-            <Entry x:Name="SelectionEntry" Grid.Row="0" />
-            <ListView x:Name="SelectionList" Grid.Row="1" />
+            <Entry x:Name="SelectionFilter" Text="{Binding Filter}"
+                   Grid.Row="0" />
+            <ListView x:Name="SelectionList"
+                      Grid.Row="1" />
         </Grid>
     </ContentView.Content>
 </ContentView>
