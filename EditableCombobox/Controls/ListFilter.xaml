@@ -13,7 +13,16 @@
             <Entry x:Name="SelectionFilter" Text="{Binding Filter}"
                    Grid.Row="0" />
             <ListView x:Name="SelectionList"
-                      Grid.Row="1" />
+                      ItemsSource="{Binding Collection}"
+                      Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Value}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </ContentView.Content>
 </ContentView>

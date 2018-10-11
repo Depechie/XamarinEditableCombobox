@@ -17,9 +17,19 @@
                 <TapGestureRecognizer Tapped="OnTapped" NumberOfTapsRequired="1" />
             </Grid.GestureRecognizers>
             
-            <Image x:Name="Icon"
+            <Image x:Name="Icon" IsVisible="false"
                    VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+            
+            <!-- Organization &#xFA35; &#xFA36; &#xF990; -->
+            <!-- Group &#xF00E; -->
+            <!-- Location &#xF406; -->
+            <!-- Reference &#xF004; -->
+            <Label 
+                   Text="&#xF990;"
+                   FontFamily="{StaticResource MaterialFontFamily}" FontSize="24"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                   Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" />
             <Label x:Name="Content"
                    LineBreakMode="TailTruncation"
                    VerticalOptions="CenterAndExpand"
@@ -29,7 +39,7 @@
                      VerticalOptions="Center" HorizontalOptions="FillAndExpand"                     
                      Grid.Row="1" Grid.Column="1" />
             <Label x:Name="DropDownIcon"
-                   Text="&#xF219;"
+                   Text="&#xF140;"
                    FontFamily="{StaticResource MaterialFontFamily}" FontSize="24"
                    VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
                    Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" />

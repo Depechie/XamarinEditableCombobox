@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using EditableCombobox.Models.Interfaces;
 using Xamarin.Forms;
 
 namespace EditableCombobox.Controls
@@ -11,7 +15,7 @@ namespace EditableCombobox.Controls
         #region Bindable properties
         public static readonly BindableProperty ImageNameProperty = BindableProperty.Create(nameof(ImageName), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnImageNamePropertyChanged);
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(nameof(Caption), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnCaptionPropertyChanged);
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<IKeyValue>), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
 
         public string ImageName
         {
@@ -25,9 +29,9 @@ namespace EditableCombobox.Controls
             set => SetValue(CaptionProperty, value);
         }
 
-        public IEnumerable ItemsSource
+        public IEnumerable<IKeyValue> ItemsSource
         {
-            get => (IEnumerable)GetValue(ItemsSourceProperty);
+            get => (IEnumerable<IKeyValue>)GetValue(ItemsSourceProperty);
             set => SetValue(ItemsSourceProperty, value);
         }
 
@@ -43,7 +47,7 @@ namespace EditableCombobox.Controls
 
         private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            ((EditableCombobox)bindable).InitItemsSource();
+            ((EditableCombobox)bindable).ItemsSourceChanged(oldValue, newValue);
         }
         #endregion
 
@@ -57,7 +61,6 @@ namespace EditableCombobox.Controls
         {
             InitIcon();
             InitCaption();
-            InitItemsSource();
         }
 
         private void InitIcon()
@@ -70,16 +73,46 @@ namespace EditableCombobox.Controls
             Content.Text = Caption;
         }
 
-        private void InitItemsSource()
-        {}
+        private void ItemsSourceChanged(object oldValue, object newValue)
+        {
+            var oldValueINotifyCollectionChanged = oldValue as INotifyCollectionChanged;
+
+            if (oldValueINotifyCollectionChanged != null)
+                oldValueINotifyCollectionChanged.CollectionChanged -= OnCollectionChanged;
+
+            var newValueINotifyCollectionChanged = newValue as INotifyCollectionChanged;
+
+            if (newValueINotifyCollectionChanged != null)
+                newValueINotifyCollectionChanged.CollectionChanged += OnCollectionChanged;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (IKeyValue item in e.OldItems)
+                    _listFilter.Collection.Remove(item);
+            }
+
+
+            if (e.NewItems != null)
+            {
+                foreach (IKeyValue item in e.NewItems)
+                    _listFilter.Collection.Add(item);
+            }
+        }
 
         private async void OnTapped(object sender, System.EventArgs e)
         {
             ContentPage popup = new ContentPage();
-            popup.Content = _listFilter;
-            popup.Appearing += OnAppearing;
 
-            await Navigation.PushModalAsync(popup);
+            if (ItemsSource != null)
+            {
+                popup.Content = _listFilter;
+                popup.Appearing += OnAppearing;
+
+                await Navigation.PushModalAsync(popup);
+            }
         }
 
         private void OnAppearing(object sender, EventArgs e)

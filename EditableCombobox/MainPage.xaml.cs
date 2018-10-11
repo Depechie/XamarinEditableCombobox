@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EditableCombobox.Models;
 using Xamarin.Forms;
 
 namespace EditableCombobox
@@ -18,11 +20,26 @@ namespace EditableCombobox
             }
         }
 
+        private ObservableCollection<Organization> _organizations = new ObservableCollection<Organization>();
+        public ObservableCollection<Organization> Organizations
+        {
+            get => _organizations;
+            set
+            {
+                _organizations = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainPage()
         {
             InitializeComponent();
             EditCB.BindingContext = this;
             ImageName = "iconlocation.png";
+
+            Organizations.Add(new Organization() { Name = "Org Abc" });
+            Organizations.Add(new Organization() { Name = "Org Def" });
+            Organizations.Add(new Organization() { Name = "Org Ghi" });
         }
 
         private void HandleTapped(object sender, System.EventArgs e)
