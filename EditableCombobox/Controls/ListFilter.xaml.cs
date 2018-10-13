@@ -27,11 +27,14 @@ namespace EditableCombobox.Controls
             get => _selectedItem;
             set
             {
-                _selectedItem = value;
-                OnPropertyChanged();
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged();
 
-                if (!(_selectedItem is null))
-                    OnItemSelected(null);
+                    if (!(_selectedItem is null))
+                        OnItemSelected(null);
+                }
             }
         }
 

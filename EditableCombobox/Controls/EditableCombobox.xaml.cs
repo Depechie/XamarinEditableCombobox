@@ -135,7 +135,10 @@ namespace EditableCombobox.Controls
         private async void OnListFilterItemSelected(object sender, EventArgs e)
         {
             if (!(_listFilter.SelectedItem is null))
+            {
+                SelectedItem = _listFilter.SelectedItem;
                 Content.Text = _listFilter.SelectedItem.Value;
+            }
 
             _popup.Appearing -= OnAppearing;
             await Navigation.PopModalAsync();
