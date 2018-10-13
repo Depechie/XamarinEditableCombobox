@@ -11,11 +11,13 @@ namespace EditableCombobox.Controls
     public partial class EditableCombobox : ContentView
     {
         private ListFilter _listFilter = new ListFilter();
+        private ContentPage _popup = new ContentPage();
 
         #region Bindable properties
         public static readonly BindableProperty ImageNameProperty = BindableProperty.Create(nameof(ImageName), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnImageNamePropertyChanged);
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(nameof(Caption), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnCaptionPropertyChanged);
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<IKeyValue>), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(IKeyValue), typeof(EditableCombobox), null, propertyChanged: OnSelectedItemPropertyChanged);
 
         public string ImageName
         {
@@ -35,6 +37,12 @@ namespace EditableCombobox.Controls
             set => SetValue(ItemsSourceProperty, value);
         }
 
+        public IKeyValue SelectedItem
+        {
+            get => (IKeyValue)GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
+        }
+
         private static void OnImageNamePropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             ((EditableCombobox)bindable).InitIcon();
@@ -49,12 +57,18 @@ namespace EditableCombobox.Controls
         {
             ((EditableCombobox)bindable).ItemsSourceChanged(oldValue, newValue);
         }
+
+        private static void OnSelectedItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+        }
         #endregion
 
         public EditableCombobox()
         {
             InitializeComponent();
             InitializeLayout();
+
+            _listFilter.ItemSelected += OnListFilterItemSelected;
         }
 
         private void InitializeLayout()
@@ -94,7 +108,6 @@ namespace EditableCombobox.Controls
                     _listFilter.Collection.Remove(item);
             }
 
-
             if (e.NewItems != null)
             {
                 foreach (IKeyValue item in e.NewItems)
@@ -104,20 +117,28 @@ namespace EditableCombobox.Controls
 
         private async void OnTapped(object sender, System.EventArgs e)
         {
-            ContentPage popup = new ContentPage();
-
             if (ItemsSource != null)
             {
-                popup.Content = _listFilter;
-                popup.Appearing += OnAppearing;
+                _listFilter.SelectedItem = SelectedItem;
+                _popup.Content = _listFilter;
+                _popup.Appearing += OnAppearing;
 
-                await Navigation.PushModalAsync(popup);
+                await Navigation.PushModalAsync(_popup);
             }
         }
 
         private void OnAppearing(object sender, EventArgs e)
         {
             _listFilter.Appearing();
+        }
+
+        private async void OnListFilterItemSelected(object sender, EventArgs e)
+        {
+            if (!(_listFilter.SelectedItem is null))
+                Content.Text = _listFilter.SelectedItem.Value;
+
+            _popup.Appearing -= OnAppearing;
+            await Navigation.PopModalAsync();
         }
     }
 }

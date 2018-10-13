@@ -31,6 +31,18 @@ namespace EditableCombobox
             }
         }
 
+        private Organization _selectedOrganization;
+        public Organization SelectedOrganization
+        {
+            get => _selectedOrganization;
+            set
+            {
+                _selectedOrganization = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public MainPage()
         {
             InitializeComponent();

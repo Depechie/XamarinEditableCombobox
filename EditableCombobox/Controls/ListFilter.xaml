@@ -14,6 +14,7 @@
                    Grid.Row="0" />
             <ListView x:Name="SelectionList"
                       ItemsSource="{Binding Collection}"
+                      SelectedItem="{Binding SelectedItem}"
                       Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>

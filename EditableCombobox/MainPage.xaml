@@ -8,6 +8,7 @@
         <controls:EditableCombobox x:Name="EditCB"
                                    ImageName="{Binding ImageName}"
                                    ItemsSource="{Binding Organizations}"
+                                   SelectedItem="{Binding SelectedOrganization}"
                                    Caption="Select an organization"
                                    Margin="20,0,20,0" />
         
