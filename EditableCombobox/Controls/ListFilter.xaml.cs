@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using EditableCombobox.Models.Interfaces;
 using Xamarin.Forms;
 
@@ -9,6 +11,8 @@ namespace EditableCombobox.Controls
     public partial class ListFilter : ContentView, INotifyPropertyChanged
     {
         public event EventHandler ItemSelected;
+
+        public IEnumerable<IKeyValue> UnFilteredCollection { get; set; }
 
         private ObservableCollection<IKeyValue> _collection = new ObservableCollection<IKeyValue>();
         public ObservableCollection<IKeyValue> Collection
@@ -41,7 +45,6 @@ namespace EditableCombobox.Controls
         public ListFilter()
         {
             InitializeComponent();
-
             BindingContext = this;
         }
 
@@ -53,6 +56,14 @@ namespace EditableCombobox.Controls
         protected virtual void OnItemSelected(EventArgs e)
         {
             ItemSelected?.Invoke(this, e);
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(SelectionFilter.Text))
+                Collection = new ObservableCollection<IKeyValue>(UnFilteredCollection);
+            else
+                Collection = new ObservableCollection<IKeyValue>(UnFilteredCollection.Where(i => i.Value.StartsWith(SelectionFilter.Text, StringComparison.OrdinalIgnoreCase)));
         }
     }
 }

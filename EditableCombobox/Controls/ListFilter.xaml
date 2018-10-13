@@ -11,6 +11,7 @@
             </Grid.RowDefinitions>
             
             <Entry x:Name="SelectionFilter" Text="{Binding Filter}"
+                   TextChanged="OnTextChanged"
                    Grid.Row="0" />
             <ListView x:Name="SelectionList"
                       ItemsSource="{Binding Collection}"

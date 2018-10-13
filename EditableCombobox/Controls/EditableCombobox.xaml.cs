@@ -113,6 +113,8 @@ namespace EditableCombobox.Controls
                 foreach (IKeyValue item in e.NewItems)
                     _listFilter.Collection.Add(item);
             }
+
+            _listFilter.UnFilteredCollection = _listFilter.Collection;
         }
 
         private async void OnTapped(object sender, System.EventArgs e)
