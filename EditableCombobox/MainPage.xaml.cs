@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using EditableCombobox.Models;
 using Xamarin.Forms;
 
@@ -9,17 +7,6 @@ namespace EditableCombobox
 {
     public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
-        private string _imageName;
-        public string ImageName
-        {
-            get => _imageName;
-            set
-            {
-                _imageName = value;
-                OnPropertyChanged();
-            }
-        }
-
         private ObservableCollection<Organization> _organizations = new ObservableCollection<Organization>();
         public ObservableCollection<Organization> Organizations
         {
@@ -42,26 +29,66 @@ namespace EditableCombobox
             }
         }
 
+        private ObservableCollection<Location> _locations = new ObservableCollection<Location>();
+        public ObservableCollection<Location> Locations
+        {
+            get => _locations;
+            set
+            {
+                _locations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Location _selectedLocation;
+        public Location SelectedLocation
+        {
+            get => _selectedLocation;
+            set
+            {
+                _selectedLocation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Group> _groups = new ObservableCollection<Group>();
+        public ObservableCollection<Group> Groups
+        {
+            get => _groups;
+            set
+            {
+                _groups = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Group _selectedGroup;
+        public Group SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                _selectedGroup = value;
+                OnPropertyChanged();
+            }
+        }
 
         public MainPage()
         {
             InitializeComponent();
-            EditCB.BindingContext = this;
-            ImageName = "iconlocation.png";
+            this.BindingContext = this;
 
-            Organizations.Add(new Organization() { Name = "Org Abc" });
-            Organizations.Add(new Organization() { Name = "Org Def" });
-            Organizations.Add(new Organization() { Name = "Org Ghi" });
-        }
+            Organizations.Add(new Organization() { Name = "Abc" });
+            Organizations.Add(new Organization() { Name = "Def" });
+            Organizations.Add(new Organization() { Name = "Ghi" });
 
-        private void HandleTapped(object sender, System.EventArgs e)
-        {
-            Navigation.PushModalAsync(new ListSelectionPage());
-        }
+            Locations.Add(new Location() { Name = "Abc" });
+            Locations.Add(new Location() { Name = "Def" });
+            Locations.Add(new Location() { Name = "Ghi" });
 
-        void Handle_Clicked(object sender, System.EventArgs e)
-        {
-            ImageName = "iconorganization.png";
+            Groups.Add(new Group() { Name = "Abc" });
+            Groups.Add(new Group() { Name = "Def" });
+            Groups.Add(new Group() { Name = "Ghi" });
         }
     }
 }

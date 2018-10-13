@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using EditableCombobox.Models;
 using EditableCombobox.Models.Interfaces;
 using Xamarin.Forms;
 
@@ -14,16 +15,10 @@ namespace EditableCombobox.Controls
         private ContentPage _popup = new ContentPage();
 
         #region Bindable properties
-        public static readonly BindableProperty ImageNameProperty = BindableProperty.Create(nameof(ImageName), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnImageNamePropertyChanged);
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(nameof(Caption), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnCaptionPropertyChanged);
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable<IKeyValue>), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(IKeyValue), typeof(EditableCombobox), null, propertyChanged: OnSelectedItemPropertyChanged);
-
-        public string ImageName
-        {
-            get => (string)GetValue(ImageNameProperty);
-            set => SetValue(ImageNameProperty, value);
-        }
+        public static readonly BindableProperty ImageIconProperty = BindableProperty.Create(nameof(Icon), typeof(string), typeof(EditableCombobox), Models.IconFont.None.ToString(), propertyChanged: OnImageIconPropertyChanged);
 
         public string Caption
         {
@@ -43,9 +38,10 @@ namespace EditableCombobox.Controls
             set => SetValue(SelectedItemProperty, value);
         }
 
-        private static void OnImageNamePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        public string ImageIcon
         {
-            ((EditableCombobox)bindable).InitIcon();
+            get => (string)GetValue(ImageIconProperty);
+            set => SetValue(ImageIconProperty, value);
         }
 
         private static void OnCaptionPropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -60,6 +56,11 @@ namespace EditableCombobox.Controls
 
         private static void OnSelectedItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
+        }
+
+        private static void OnImageIconPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((EditableCombobox)bindable).InitIcon();
         }
         #endregion
 
@@ -79,7 +80,22 @@ namespace EditableCombobox.Controls
 
         private void InitIcon()
         {
-            Icon.Source = ImageName;
+            //Icon.Source = ImageName;
+            switch(Enum<Models.IconFont>.Parse(ImageIcon))
+            {
+                case Models.IconFont.Organization:
+                    IconFont.Text = "戀";
+                    break;
+                case Models.IconFont.Location:
+                    IconFont.Text = ""; // @"&#xF406;";
+                    break;
+                case Models.IconFont.Group:
+                    IconFont.Text = "";
+                    break;
+                case Models.IconFont.Reference:
+                    IconFont.Text = "";
+                    break;
+            }
         }
 
         private void InitCaption()

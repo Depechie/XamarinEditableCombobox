@@ -4,14 +4,27 @@
              xmlns:local="clr-namespace:EditableCombobox"
              xmlns:controls="clr-namespace:EditableCombobox.Controls;assembly=EditableCombobox"
              x:Class="EditableCombobox.MainPage">
-    <StackLayout  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <StackLayout Spacing="20"
+                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <controls:EditableCombobox x:Name="EditCB"
-                                   ImageName="{Binding ImageName}"
+                                   ImageIcon="Organization"
                                    ItemsSource="{Binding Organizations}"
                                    SelectedItem="{Binding SelectedOrganization, Mode=TwoWay}"
                                    Caption="Select an organization"
                                    Margin="20,0,20,0" />
         
-        <Button Clicked="Handle_Clicked" />
+        <controls:EditableCombobox x:Name="EditCB2"
+                                   ImageIcon="Group"
+                                   ItemsSource="{Binding Groups}"
+                                   SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
+                                   Caption="Select a group"
+                                   Margin="20,0,20,0" />
+        
+        <controls:EditableCombobox x:Name="EditCB3"
+                                   ImageIcon="Location"
+                                   ItemsSource="{Binding Locations}"
+                                   SelectedItem="{Binding SelectedLocation, Mode=TwoWay}"
+                                   Caption="Select a location"
+                                   Margin="20,0,20,0" />
     </StackLayout>
 </ContentPage>

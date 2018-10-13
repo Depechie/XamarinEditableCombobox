@@ -5,7 +5,7 @@
     <ContentView.Content>
         <Grid RowSpacing="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
@@ -25,10 +25,10 @@
             <!-- Group &#xF00E; -->
             <!-- Location &#xF406; -->
             <!-- Reference &#xF004; -->
-            <Label 
+            <Label x:Name="IconFont"
                    Text="&#xF990;"
                    FontFamily="{StaticResource MaterialFontFamily}" FontSize="24"
-                   VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"
                    Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" />
             <Label x:Name="Content"
                    LineBreakMode="TailTruncation"

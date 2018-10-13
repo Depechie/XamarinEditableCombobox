@@ -10,7 +10,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
-            <Entry x:Name="SelectionFilter" Text="{Binding Filter}"
+            <Entry x:Name="SelectionFilter"
                    TextChanged="OnTextChanged"
                    Grid.Row="0" />
             <ListView x:Name="SelectionList"
@@ -20,7 +20,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Value}" />
+                            <Label Text="{Binding Value}" VerticalOptions="CenterAndExpand" FontSize="18" />
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
