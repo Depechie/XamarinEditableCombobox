@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using EditableCombobox.Models.Interfaces;
 using Xamarin.Forms;
 
 namespace EditableCombobox.Controls
@@ -12,10 +11,10 @@ namespace EditableCombobox.Controls
     {
         public event EventHandler ItemSelected;
 
-        public IEnumerable<IKeyValue> UnFilteredCollection { get; set; }
+        public IEnumerable<object> UnFilteredCollection { get; set; }
 
-        private ObservableCollection<IKeyValue> _collection = new ObservableCollection<IKeyValue>();
-        public ObservableCollection<IKeyValue> Collection
+        private ObservableCollection<object> _collection = new ObservableCollection<object>();
+        public ObservableCollection<object> Collection
         {
             get => _collection;
             set
@@ -25,8 +24,8 @@ namespace EditableCombobox.Controls
             }
         }
 
-        private IKeyValue _selectedItem;
-        public IKeyValue SelectedItem
+        private object _selectedItem;
+        public object SelectedItem
         {
             get => _selectedItem;
             set
@@ -61,9 +60,9 @@ namespace EditableCombobox.Controls
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(SelectionFilter.Text))
-                Collection = new ObservableCollection<IKeyValue>(UnFilteredCollection);
+                Collection = new ObservableCollection<object>(UnFilteredCollection);
             else
-                Collection = new ObservableCollection<IKeyValue>(UnFilteredCollection.Where(i => i.Value.StartsWith(SelectionFilter.Text, StringComparison.OrdinalIgnoreCase)));
+                Collection = new ObservableCollection<object>(UnFilteredCollection.Where(i => i.ToString().IndexOf(SelectionFilter.Text, StringComparison.OrdinalIgnoreCase) != -1));
         }
     }
 }
