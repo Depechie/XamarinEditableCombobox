@@ -110,6 +110,15 @@ namespace EditableCombobox.Controls
 
             if (newValueINotifyCollectionChanged != null)
                 newValueINotifyCollectionChanged.CollectionChanged += OnCollectionChanged;
+
+            if (!(newValue is null))
+            {
+                _listFilter.Collection.Clear();
+                foreach (var item in (IEnumerable)newValue)
+                    _listFilter.Collection.Add(item);
+
+                _listFilter.UnFilteredCollection = _listFilter.Collection;
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
