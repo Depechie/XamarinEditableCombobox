@@ -15,7 +15,7 @@ namespace EditableCombobox.Controls
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(nameof(Caption), typeof(string), typeof(EditableCombobox), string.Empty, propertyChanged:OnCaptionPropertyChanged);
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IEnumerable), typeof(EditableCombobox), null, propertyChanged: OnItemsSourcePropertyChanged);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(EditableCombobox), null, propertyChanged: OnSelectedItemPropertyChanged);
-        public static readonly BindableProperty ImageIconProperty = BindableProperty.Create(nameof(Icon), typeof(string), typeof(EditableCombobox), Models.IconFont.None.ToString(), propertyChanged: OnImageIconPropertyChanged);
+        public static readonly BindableProperty ImageIconProperty = BindableProperty.Create(nameof(ImageIcon), typeof(string), typeof(EditableCombobox), Models.IconFont.None.ToString(), propertyChanged: OnImageIconPropertyChanged);
 
         public string Caption
         {
@@ -77,14 +77,13 @@ namespace EditableCombobox.Controls
 
         private void InitIcon()
         {
-            //Icon.Source = ImageName;
             switch(Enum<Models.IconFont>.Parse(ImageIcon))
             {
                 case Models.IconFont.Organization:
                     IconFont.Text = "戀";
                     break;
                 case Models.IconFont.Location:
-                    IconFont.Text = ""; // @"&#xF406;";
+                    IconFont.Text = "";
                     break;
                 case Models.IconFont.Group:
                     IconFont.Text = "";
